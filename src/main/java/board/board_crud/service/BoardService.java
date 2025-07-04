@@ -20,29 +20,31 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    public Board createBoard(BoardRequestDto requestDto){
+    public Board createBoard(BoardRequestDto requestDto) {
         Board board = new Board(requestDto);
         boardRepository.save(board);
         return board;
     }
 
-    public List<BoardListResponseDto> findAllBoard(){
-        try{
+    public List<BoardListResponseDto> findAllBoard() {
+        try {
             List<Board> boardList = boardRepository.findAll();
             List<BoardListResponseDto> responseDtoList = new ArrayList<>();
-            for (Board board : boardList){
+            for (Board board : boardList) {
                 responseDtoList.add(
                         new BoardListResponseDto(board)
                 );
             }
+
+
             return responseDtoList;
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         return null;
     }
 
-    public BoardResponseDto findOneBoard(Long id){
+    public BoardResponseDto findOneBoard(Long id) {
         Board board = boardRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("조회 실패")
         );
@@ -59,7 +61,7 @@ public class BoardService {
     }
 
     @Transactional
-    public Long deleteBoard(Long id){
+    public Long deleteBoard(Long id) {
         boardRepository.deleteById(id);
         return id;
     }
@@ -70,7 +72,7 @@ public class BoardService {
         );
         if (inputPassword.equals(board.getPassword())) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
