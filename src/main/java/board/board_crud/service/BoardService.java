@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -27,21 +28,10 @@ public class BoardService {
     }
 
     public List<BoardListResponseDto> findAllBoard() {
-        try {
-            List<Board> boardList = boardRepository.findAll();
-            List<BoardListResponseDto> responseDtoList = new ArrayList<>();
-            for (Board board : boardList) {
-                responseDtoList.add(
-                        new BoardListResponseDto(board)
-                );
-            }
-
-
-            return responseDtoList;
-        } catch (Exception e) {
-
-        }
-        return null;
+        List<Board> boardList = boardRepository.findAll();
+        return boardList.stream()
+                .map(BoardListResponseDto::new)
+                .collect(Collectors.toList());
     }
 
     public BoardResponseDto findOneBoard(Long id) {
