@@ -36,7 +36,7 @@ public class BoardService {
 
     public BoardResponseDto findOneBoard(Long id) {
         Board board = boardRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("조회 실패")
+                () -> new IllegalArgumentException("해당 ID(" + id + ")에 해당하는 게시글이 존재하지 않습니다.")
         );
         return new BoardResponseDto(board);
     }
